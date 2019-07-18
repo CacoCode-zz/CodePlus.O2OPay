@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs/CodePlus.O2OPay/v15
+/CodePlus.O2OPay.Test/obj
+/CodePlus.O2OPay.Test/bin/Debug/netcoreapp2.2
+/CodePlus.O2OPay.Core/bin/Debug/netstandard2.0
+/CodePlus.O2OPay.Core/obj
