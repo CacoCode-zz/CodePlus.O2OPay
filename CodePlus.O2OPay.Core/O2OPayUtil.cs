@@ -26,10 +26,10 @@ namespace CodePlus.O2OPay.Core
             {
                 if (!string.IsNullOrEmpty(item.Value))
                 {
-                    sb.Append(item.Key).Append("=").Append(item.Value).Append("&");
+                    sb.Append(item.Value);
                 }
             }
-            return sb.ToString().Substring(0,sb.ToString().Length-1);
+            return sb.ToString();
         }
 
         public static string SignParam(Dictionary<string, string> param, string token)
@@ -40,7 +40,7 @@ namespace CodePlus.O2OPay.Core
             }
             param.Add("token", token);
             var blankStr = BuildParamStr(param);
-            return Md5Encrypt(blankStr).ToLower();
+            return Md5Encrypt(blankStr);
 
         }
 
@@ -73,7 +73,7 @@ namespace CodePlus.O2OPay.Core
         {
             MD5 md5 = new MD5CryptoServiceProvider();
             var result = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(strText));
-            return BitConverter.ToString(result).Replace("-", "");
+            return BitConverter.ToString(result).Replace("-", "").ToLower();
         }  
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -28,16 +29,22 @@ namespace CodePlus.O2OPay.Core
         public O2OPayResponse CustomPay(O2OPayInput input)
         {
             var paramDic = BuildBasicParam(input);
-            var result = HttpRequestUtil.PostAsync($"{_apiGateWay}", paramDic).Result;
-            var response = JsonConvert.DeserializeObject<O2OPayResponse>(result);
-            return response;
+            try
+            {
+                var result = HttpRequestUtil.PostAsync($"{_apiGateWay}", paramDic).Result;
+                var response = JsonConvert.DeserializeObject<O2OPayResponse>(result);
+                return response;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public string ValidKey(O2OPayInput input)
         {
             var paramDic = BuildBasicParam(input);
             var result = HttpRequestUtil.PostAsync($"{_apiGateWay}", paramDic).Result;
-            //var response = JsonConvert.DeserializeObject<O2OPayResponse>(result);
             return result;
         }
 
@@ -55,7 +62,6 @@ namespace CodePlus.O2OPay.Core
                 {"goodsname", input.GoodsName}
             };
             paramDic.Add("key", O2OPayUtil.SignParam(paramDic, _token));
-            //paramDic.Remove("token");
             return paramDic;
         }
     }
